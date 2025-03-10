@@ -17,7 +17,8 @@ public class CuentaBancaria {
     private String password;
     private double saldo;
     /**
-     * Constructor vacío con el que se inicializa el saldo en 0
+     * Constructor vacío con el que se inicializa el saldo en 0, y
+     * el usuario y la contraseña en vacío.
      */
     public CuentaBancaria(){
         this.user = null;
@@ -25,10 +26,10 @@ public class CuentaBancaria {
         this.saldo = 0;
     }
     /**
-     * 
-     * @param user
-     * @param password
-     * @param saldo 
+     * Se inicializa la cuenta con valores predefinidos
+     * @param user usuario predefinido
+     * @param password contraseña predefinida
+     * @param saldo  saldo predefinido
      */
     public CuentaBancaria(String user, String password, double saldo) {
         this.user = user;
@@ -50,19 +51,31 @@ public class CuentaBancaria {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-
+    /**
+     * Obtener el usuario de la cuenta
+     * @return Usuario de la cuenta
+     */
     public String getUser() {
         return user;
     }
-
+    /**
+     * Establecer un nuevo usuario a la cuenta
+     * @param user => nuevo nombre de usuario de la cuenta.
+     */
     public void setUser(String user) {
         this.user = user;
     }
-
+    /**
+     * Obtener la contraseña de la cuenta
+     * @return Contraseña de la cuenta.
+     */
     public String getPassword() {
         return password;
     }
-
+    /**
+     * Establecer una nueva contraseña a la cuenta
+     * @param password => Nueva contraseña de la cuenta.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
