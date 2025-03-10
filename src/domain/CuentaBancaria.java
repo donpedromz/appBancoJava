@@ -13,20 +13,29 @@ public class CuentaBancaria {
     /**
      * Atributo que almacena el saldo del usuario, con valores decimales.
      */
+    private String user;
+    private String password;
     private double saldo;
     /**
      * Constructor vacío con el que se inicializa el saldo en 0
      */
     public CuentaBancaria(){
+        this.user = null;
+        this.password = null;
         this.saldo = 0;
     }
     /**
-     * Constructor con el que se inicializa el saldo con un valor personalizado
-     * @param saldo saldo con el que se inicializará la cuenta
+     * 
+     * @param user
+     * @param password
+     * @param saldo 
      */
-    public CuentaBancaria(double saldo){
+    public CuentaBancaria(String user, String password, double saldo) {
+        this.user = user;
+        this.password = password;
         this.saldo = saldo;
     }
+    
     /**
      * Método para obtener el valor del saldo de la cuenta
      * @return saldo de la cuenta
@@ -41,6 +50,23 @@ public class CuentaBancaria {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     /**
      * Actualiza el saldo de la cuenta, sumandole al saldo actual un saldo ingresado
      * por el usuario
@@ -67,6 +93,9 @@ public class CuentaBancaria {
      */
     @Override
     public String toString() {
+        if(this.saldo == 0){
+            return "POR FAVOR DEPOSITE DINERO A SU CUENTA";
+        }
         return "$"+this.saldo;
     }
     

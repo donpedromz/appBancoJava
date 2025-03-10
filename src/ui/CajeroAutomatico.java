@@ -5,26 +5,32 @@
 package ui;
 
 /**
- *UI DE CAJERO AUTOMATICO, USANDO COMO CLASE PLANTILLA CUENTABANCARIA
+ * UI DE CAJERO AUTOMATICO, USANDO COMO CLASE PLANTILLA CUENTABANCARIA
+ *
  * @author Juan Pablo
  */
 import domain.CuentaBancaria;
 import excepciones.OperacionInvalidaException;
 import excepciones.SaldoInsuficienteException;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 public class CajeroAutomatico extends javax.swing.JFrame {
 
     /**
-     * INICIALIZAMOS LA CUENTA CON UN SALDO 0, USANDO UN CONSTRUCTOR VACIO Y SETEAMOS UN TEXTO ESTANDAR PARA UN SALDO
-     * IGUAL A 0.
-     * SETEAMOS LA UBICACIÓN DE LA VENTANA EN EL CENTRO DE LA PANTALLA
-     * Creates new form CajeroAutomatico
+     * INICIALIZAMOS LA CUENTA CON UN SALDO 0, USANDO UN CONSTRUCTOR VACIO Y
+     * SETEAMOS UN TEXTO ESTANDAR PARA UN SALDO IGUAL A 0. SETEAMOS LA UBICACIÓN
+     * DE LA VENTANA EN EL CENTRO DE LA PANTALLA Creates new form
+     * CajeroAutomatico
      */
     private CuentaBancaria cuenta;
-    public CajeroAutomatico() {
-        this.cuenta = new CuentaBancaria();
+
+    public CajeroAutomatico(CuentaBancaria cuentaSesion) {
+        this.cuenta = cuentaSesion;
         initComponents();
         this.setLocationRelativeTo(null);
-        this.labelSaldo.setText("POR FAVOR DEPOSITE DINERO");
+        this.labelSaldo.setText(cuentaSesion.toString());
     }
 
     /**
@@ -115,106 +121,85 @@ public class CajeroAutomatico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public JButton getDepositarButton() {
+        return depositarButton;
+    }
+
+    public void setDepositarButton(JButton depositarButton) {
+        this.depositarButton = depositarButton;
+    }
+
+    public JButton getRetirarButton() {
+        return retirarButton;
+    }
+
+    public void setRetirarButton(JButton retirarButton) {
+        this.retirarButton = retirarButton;
+    }
+
+    public void addRetirarButtonListener(java.awt.event.ActionListener listener) {
+        this.retirarButton.addActionListener(listener);
+    }
+
+    public void addDepositarButtonListener(java.awt.event.ActionListener listener) {
+        this.depositarButton.addActionListener(listener);
+    }
+
     /**
      * Obtenemos el valor que el usuario haya ingresada en el jTextField1
-     * @return double con el valor del saldo ingresado en el campo de texto jTextField1
-     * @throws OperacionInvalidaException  si no se ingresa un numero o si se ingresa un numero negativo
+     *
+     * @return double con el valor del saldo ingresado en el campo de texto
+     * jTextField1
+     * @throws OperacionInvalidaException si no se ingresa un numero o si se
+     * ingresa un numero negativo
      */
-    private double obtenerMonto()throws OperacionInvalidaException{
-        double saldo = 0;
-        try{
-            saldo = Double.parseDouble(this.jTextField1.getText());
-        }catch(Exception e){
-            throw new OperacionInvalidaException("VALOR INGRESADO INCORRECTO");
-        }
-        if(saldo < 0){
-            throw new OperacionInvalidaException("VALOR NEGATIVO INVALIDO");
-        }
-        return saldo;
-    }
     /**
-     * MÉTODO PARA MANEJAR EL RETIRO DE DINERO.
-     * Obtenemos el saldo ingresado por el usuario usando el metodo getMonto()
-     * Si el usuario ingresa valores invalidos, se genera una OperacionInvalidaException, con la cual, 
-     * se setea un mensaje de error en labelError
-     * Si el usuario ingresa un monto mayor al del saldo actual de la cuenta, se genera un SaldoInsuficienteException,
-     * con el cual, seteamos un mensaje de error en labelError
-     * Si no se genera un error, se limpia el labelError, y se muestra el nuevo saldo en la UI.
+     * MÉTODO PARA MANEJAR EL RETIRO DE DINERO. Obtenemos el saldo ingresado por
+     * el usuario usando el metodo getMonto() Si el usuario ingresa valores
+     * invalidos, se genera una OperacionInvalidaException, con la cual, se
+     * setea un mensaje de error en labelError Si el usuario ingresa un monto
+     * mayor al del saldo actual de la cuenta, se genera un
+     * SaldoInsuficienteException, con el cual, seteamos un mensaje de error en
+     * labelError Si no se genera un error, se limpia el labelError, y se
+     * muestra el nuevo saldo en la UI.
+     *
      * @param evt evento generado al presionar el botón.
      */
-    private void retirarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirarButtonActionPerformed
+    public JLabel getLabelError() {
+        return labelError;
+    }
 
-        double saldo = 0;
-        try{
-            saldo = this.obtenerMonto();
-            this.cuenta.retirarDinero(saldo);
-        }catch(OperacionInvalidaException e){
-            this.labelError.setText(e.getMessage());
-            return;
-        }catch(SaldoInsuficienteException e1){
-            this.labelError.setText(e1.getMessage());
-            return;
-        }
-        this.labelError.setText(null);
-        this.labelSaldo.setText(this.cuenta.toString());
+    public void setLabelError(JLabel labelError) {
+        this.labelError = labelError;
+    }
+
+    public JLabel getLabelSaldo() {
+        return labelSaldo;
+    }
+
+    public void setLabelSaldo(JLabel labelSaldo) {
+        this.labelSaldo = labelSaldo;
+    }
+
+    public JTextField getjTextField1() {
+        return jTextField1;
+    }
+
+    public void setjTextField1(JTextField jTextField1) {
+        this.jTextField1 = jTextField1;
+    }
+    private void retirarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirarButtonActionPerformed
+        
+
     }//GEN-LAST:event_retirarButtonActionPerformed
 
-    /**
-     * MÉTODO PARA MANEJAR EL DEPOSITO DE DINERO.
-     * Obtenemos el saldo ingresado por el usuario usando el metodo getMonto()
-     * Si el usuario ingresa valores invalidos, se genera una OperacionInvalidaException, con la cual, 
-     * se setea un mensaje de error en labelError
-     * Si no se genera un error, se limpia el labelError, y se muestra el nuevo saldo en la UI.
-     * @param evt 
-     */
+    public void mostrarInterfaz() {
+        this.setVisible(true);
+    }
     private void depositarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositarButtonActionPerformed
-        
-        double saldo = 0;
-        try{
-            saldo = this.obtenerMonto();
-            this.cuenta.depositarDinero(saldo);
-        }catch(OperacionInvalidaException e){
-            this.labelError.setText(e.getMessage());
-            return;
-        }
-        this.labelError.setText(null);
-        this.labelSaldo.setText(this.cuenta.toString());
+
     }//GEN-LAST:event_depositarButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CajeroAutomatico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CajeroAutomatico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CajeroAutomatico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CajeroAutomatico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CajeroAutomatico().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton depositarButton;
